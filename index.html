@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Бібліографія Луганського природного заповідника </title>
+
+  <!-- Bootstrap -->
+  <script src="js/lodash.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <!-- <link rel="stylesheet" href="css/swipebox.css"> -->
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- <script src="js/jquery.swipebox.min.js"></script> -->
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body ng-app="bookslpz" ng-controller="bookslpzController">
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-5">
+            <h1 class="panel-title" style="padding-top:3px;font-size:18px; text-weight:bold;">Бібліографія Луганського природного заповідника<br/>Bibliography of Luhansk Natural Reserve  </h1>
+          </div>
+          <div style="margin-top:5px;" class="col-md-5">
+            <form class="form-inline" name="signForm" novalidate>
+
+              <div ng-hide="isAuth" class={{signFormClass}}>
+                <input type="email" name="email" class="form-control" ng-model="email" id="email" placeholder="E-mail" required />
+                <input type="password" class="form-control" ng-model="password" id="password" placeholder="Пароль" required />
+                <br/>
+                <span style="color:red" ng-show="signForm.email.$invalid">
+                 <span ng-show="signForm.email.$error.email"><b>Введіть коректний E-mail</b></span>
+
+                </span>
+                <span ng-show=wrongPassword style="color:red;"><b>Помилка в E-mail або паролі!</b></span>
+
+
+
+              </div>
+
+            </form>
+          </div>
+          <div style="margin-top:5px;" class="col-md-2">
+            <button style="width:100%;" ng-hide="isAuth" ng-click=signIn() class="btn btn-primary"><span><i class="fa fa-sign-in " aria-hidden="true"></i> Вхід</span></button>
+            <button style="width:100%;" ng-show="isAuth" ng-click=signOut() class="btn btn-success"><span><i class="fa fa-sign-out " aria-hidden="true"></i> Вихід</span></button>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div style="width:95%; margin:auto;">
+
+          <div style="padding:10px; margin-bottom:15px; background:#f5f5f5;" class="row">
+            <form class="form-inline" name="searchForm">
+              <div class="row">
+                <div class="col-md-6" style="float:left;">
+                  <div style="margin-top:10px;margin-bottom:15px;" class="input-group">
+                    <span class="input-group-addon" style="margin-right:15px;  font-weight:bold; font-size:14px;  padding-right:40px; ">Пошук по назві</span>
+                    <input type="search" class="form-control" id="searchName" placeholder="Найменування" ng-model="searchName.name" style="width:310px;">
+                    <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchName ).length}}</span>
+
+                  </div>
+                </div>
+
+                <div class="col-md-6" style="float:right;">
+                  <div style="margin-top:10px;margin-bottom:10px;" class="input-group">
+                    <span class="input-group-addon" style="font-weight:bold; font-size:14px; padding-right:10px; ">Пошук по автору</span>
+                    <input type="search" class="form-control" id="searchAuthors" placeholder="Пошук по автору" ng-model="searchAuthors.authors" style="width:310px;">
+                    <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchAuthors ).length}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6" style="float:left;">
+                  <div style="margin-top:10px;margin-bottom:15px;" class="input-group">
+                    <span class="input-group-addon" style="margin-right:15px; padding-right:85px; font-weight:bold; font-size:14px;">Джерело</span>
+                    <input type="search" class="form-control" id="searchBookname" placeholder="Джерело" ng-model="searchBookname.bookname" style="width:310px;">
+                    <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchBookname ).length}}</span>
+
+                  </div>
+                </div>
+
+                <div class="col-md-6" style="float:right;">
+                  <div style="margin-top:10px;margin-bottom:10px;" class="input-group">
+                    <span class="input-group-addon" style="font-weight:bold; padding-right:110px;font-size:14px;">Рік</span>
+                    <input type="search" class="form-control" id="searchYear" placeholder="Рік" ng-model="searchYear.year" style="width:310px;">
+                    <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchYear ).length}}</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="clearfix"></div>
+            <label style="margin-top:10px;margin-left:10px; font-size:16px;">Всего публикаций {{books.length}}</label>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-primary" style="margin-right:20px;" ng-click="showAddForm()">Добавить публикацию</button>
+              </div>
+            </div>
+
+
+            <div class="row" style="padding:10px; background:#f5f5f5;" ng-show='showAdd'>
+
+              <form class="form-group" name="addForm" ng-submit="addNewBook()">
+                <div class="col-md-10">
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <select class="form-control" id="type" ng-model="newType">
+                        <option value="1">Книга</option>
+                        <option value="2">Стаття в збірнику</option>
+                        <option value="3">Стаття в журналі</option>
+                        <option value="4">Матеріали конференцій</option>
+                        <option value="5">Рукописи</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class=" row ">
+                    <div class="col-md-12 ">
+                      <input type="text " class="form-control " placeholder="Автори " ng-model="newAuthors " />
+                    </div>
+
+                  </div>
+                  <div class="row ">
+                    <div class="col-md-12 ">
+                      <input type="text " class="form-control " placeholder="Найменування " ng-model="newName " />
+                    </div>
+
+                  </div>
+                  <div class="row ">
+                    <div class="col-md-12 ">
+                      <input type="text " class="form-control " placeholder="Редактори / Укладачи" ng-model="newEditors " />
+                    </div>
+
+                  </div>
+                  <div class="row ">
+                    <div class="col-md-12 ">
+                      <input type="text " class="form-control " placeholder="Джерело " ng-model="newBookname " />
+                    </div>
+                  </div>
+                  <div class="row ">
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="Випуск " ng-model="newVypusk " />
+                    </div>
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="Том " ng-model="newTom " />
+                    </div>
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="Номер " ng-model="newNumber " />
+                    </div>
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="Сторінки " ng-model="newPage " />
+                    </div>
+                  </div>
+                  <div class="row ">
+
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="Год " ng-model="newYear " />
+                    </div>
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="Літера " ng-model="newYearLetter " />
+                    </div>
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="Місто " ng-model="newTown " />
+                    </div>
+
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="Видавництво " ng-model="newPublic " />
+                    </div>
+
+
+                  </div>
+
+                  <input type="text " class="form-control " placeholder="Примітки " ng-model="newPrim " />
+                  <input type="text " class="form-control " placeholder="Посилання / URL " ng-model="newLink " />
+
+
+                </div>
+                <div class="col-md-2 ">
+                  <button class="btn btn-danger " ng-click="showAdd=false " style="float:right; "><span class="fa fa-ban fa-2x "></span></button>
+                  <button class="btn btn-success " type="submit " id="addBtn " style="float:right; "><span class="fa fa-plus fa-2x "></span></button>
+                </div>
+
+              </form>
+
+
+
+            </div>
+
+
+
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" ng-show='showEdit' aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="editModalLabel">Редагувати публікацію</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row" style="padding:10px; background:#f5f5f5;">
+                      <form class="form-group" name="editForm" ng-submit=updateBook(book.$id)>
+                        <div class="row">
+                          <div class="col-md-12 ">
+                            <select class="form-control" id="type" value="{{bookToUpdate.type}}" ng-model="book.type">
+                              <option value="1">Книга</option>
+                              <option value="2">Стаття в збірнику</option>
+                              <option value="3">Стаття в журналі</option>
+                              <option value="4">Матеріали конференцій</option>
+                              <option value="5">Рукописи</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class=" row ">
+                          <div class="col-md-12 ">
+                            <input type="text " class="form-control " placeholder="Автори " value="{{bookToUpdate.authors}}" ng-model="bookToUpdate.authors" />
+                          </div>
+                        </div>
+                        <div class="row ">
+                          <div class="col-md-12 ">
+                            <input type="text " class="form-control " placeholder="Найименування " value="{{bookToUpdate.name}}" ng-model="bookToUpdate.name" />
+                          </div>
+                        </div>
+                        <div class="row ">
+                          <div class="col-md-12 ">
+                            <input type="text " class="form-control " placeholder="Редактори / Укладачи" value="{{bookToUpdate.editors}}" ng-model="bookToUpdate.editors" />
+                          </div>
+                        </div>
+                        <div class="row ">
+                          <div class="col-md-12 ">
+                            <input type="text " class="form-control " placeholder="Джерело " value="{{bookToUpdate.bookname}}" ng-model="bookToUpdate.bookname" />
+                          </div>
+                        </div>
+                        <div class="row ">
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="Випуск " value="{{bookToUpdate.vypusk}}" ng-model="bookToUpdate.vypusk" />
+                          </div>
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="Том " value="{{bookToUpdate.tom}}" ng-model="bookToUpdate.tom" />
+                          </div>
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="Номер " value="{{bookToUpdate.number}}" ng-model="bookToUpdate.number" />
+                          </div>
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="Сторінки " value="{{bookToUpdate.page}}" ng-model="bookToUpdate.page" />
+                          </div>
+                        </div>
+                        <div class="row ">
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="Год " value="{{bookToUpdate.year}}" ng-model="bookToUpdate.year" />
+                          </div>
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="Літера " value="{{bookToUpdate.yearletter}}" ng-model="bookToUpdate.yearletter" />
+                          </div>
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="Місто " value="{{bookToUpdate.town}}" ng-model="bookToUpdate.town" />
+                          </div>
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="Видавництво " value="{{bookToUpdate.public}}" ng-model="bookToUpdate.public" />
+                          </div>
+                        </div>
+                        <input type="text " class="form-control " placeholder="Примітки " value="{{bookToUpdate.prim}}" ng-model="bookToUpdate.prim" />
+                        <input type="text " class="form-control " placeholder="Посилання / URL " value="{{bookToUpdate.link}}" ng-model="bookToUpdate.link" />
+                        <button type="submit" class="btn btn-primary">Оновити</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
+                      </form>
+
+
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <ol>
+          <li ng-repeat="book in books | filter : searchName | filter : searchAuthors | filter : searchBookname | filter : searchYear | orderBy : Sort | orderBy: year | orderBy: yearletter " ng-mouseover="editBtn=true" ng-mouseleave="editBtn=false">
+
+            <b>{{book.authors}}</b> <i>{{book.name}}</i><span ng-show=isEditors(book)> {{book.editors}}. &mdash;</span><span style="align:left; " ng-show="book.type==3 "> // </span><span ng-show="book.type==4 "> // </span><span ng-show="book.type==2 "> / </span><span ng-show="book.type!=1"> {{book.bookname}}. &mdash;</span><span ng-show="book.vypusk ">{{book.vypusk}}. &mdash;</span><span ng-show=isYear(book)> {{book.year}}</span><span ng-show=isYearLetter(book)>{{book.yearletter}}</span><span ng-show=isYear(book)>. &mdash; </span><span ng-show=isTom(book)>{{book.tom}}</span><span ng-show=isTomAndNumber(book)>, </span><span ng-show=isNumber(book)>{{book.number}} </span><span ng-hide=isYear(book)>. &mdash;</span><span ng-show=isTown(book)> {{book.town}}</span><span ng-show=isPublic(book)>: {{book.public}}</span><span ng-show=isOnlyYear(book)>. &mdash; </span><span ng-show=isPage(book)>{{book.page}}</span><span ng-show=isPrim(book)>. &mdash; {{book.prim}}</span><span ng-show=isLink(book)>. &mdash; {{book.link}}</span>.<span style="cursor: pointer;" ng-show="isAuth && editBtn" ng-click="editBook(book.$id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+
+          </li>
+
+        </ol>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js "></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+
+  <!-- AngularFire -->
+  <script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
+  <script>
+    // Initialize the Firebase SDK
+    var config = {
+      apiKey: "AIzaSyD8GHU1vWdZALfMKJq035Pw-Ah0S4AVgWM",
+      authDomain: "bibliographylpz.firebaseapp.com",
+      databaseURL: "https://bibliographylpz.firebaseio.com",
+      storageBucket: "bibliographylpz.appspot.com",
+      messagingSenderId: "715207774926"
+    };
+    firebase.initializeApp(config);
+
+  </script>
+
+  <script src="app.js "></script>
+  <script src="js/controller.js "></script>
+
+</body>
+
+
+
+</html>
