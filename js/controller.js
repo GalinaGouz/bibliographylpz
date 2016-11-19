@@ -26,6 +26,7 @@ angular
       firebase.auth().signInWithEmailAndPassword(email, password).then(function (firebaseUser) {
         $scope.firebaseUser = firebaseUser;
         $scope.isAuth = true;
+        $scope.$apply();
         $scope.signFormClass = 'has-success';
         $scope.wrongPassword = false;
       }).catch(function (error) {
@@ -40,6 +41,7 @@ angular
       firebase.auth().signOut().then(function () {
         $scope.firebaseUser = null;
         $scope.isAuth = false;
+        $scope.$apply();
       }).catch(function (error) {
         $scope.error = error;
 
