@@ -64,55 +64,57 @@
       </div>
 
       <div class="panel-body">
-        <div style="width:95%; margin:auto;">
+        <div style="width:95%;">
 
-          <div style="padding:10px; margin-bottom:15px; background:#f5f5f5;" class="row">
-            <form class="form-inline" name="searchForm">
+          <div style="padding:15px; margin-bottom:15px; background:#f5f5f5;" class="row">
+
+            <form class="form" name="searchForm">
               <div class="row">
-                <div class="col-md-6" style="float:left;">
+                <div class="col-md-6 col-xs-12">
                   <div style="margin-top:10px;margin-bottom:15px;" class="input-group">
-                    <span class="input-group-addon" style="margin-right:15px;  font-weight:bold; font-size:14px;  padding-right:54px; ">Пошук по назві</span>
-                    <input type="search" class="form-control" id="searchName" placeholder="Назва" ng-model="searchName.name" style="width:310px;">
+                    <span class="input-group-addon hidden-xs" style="margin-right:15px;  font-weight:bold; font-size:14px;  padding-right:54px; ">Пошук по назві</span>
+                    <input type="search" class="form-control" id="searchName" placeholder="Пошук по назві" ng-model="searchName.name" style="width:100%;">
                     <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchName ).length}}</span>
 
                   </div>
                 </div>
 
-                <div class="col-md-6" style="float:right;">
+                <div class="col-md-6 col-xs-12">
                   <div style="margin-top:10px;margin-bottom:10px;" class="input-group">
-                    <span class="input-group-addon" style="font-weight:bold; font-size:14px; padding-right:10px; ">Пошук по автору</span>
-                    <input type="search" class="form-control" id="searchAuthors" placeholder="Пошук по автору" ng-model="searchAuthors.authors" style="width:310px;">
+                    <span class="input-group-addon hidden-xs" style="font-weight:bold; font-size:14px; padding-right:10px; ">Пошук по автору</span>
+                    <input type="search" class="form-control" id="searchAuthors" placeholder="Пошук по автору" ng-model="searchAuthors.authors" style="width:100%;">
                     <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchAuthors ).length}}</span>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6" style="float:left;">
+                <div class="col-md-6 col-xs-12">
                   <div style="margin-top:10px;margin-bottom:15px;" class="input-group">
-                    <span class="input-group-addon" style="margin-right:15px; padding-right:85px; font-weight:bold; font-size:14px;">Публікація</span>
-                    <input type="search" class="form-control" id="searchBookname" placeholder="Публікація" ng-model="searchBookname.bookname" style="width:310px;">
+                    <span class="input-group-addon hidden-xs" style="margin-right:15px; padding-right:85px; font-weight:bold; font-size:14px;">Публікація</span>
+                    <input type="search" class="form-control" id="searchBookname" placeholder="Публікація" ng-model="searchBookname.bookname" style="width:100%;">
                     <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchBookname ).length}}</span>
 
                   </div>
                 </div>
 
-                <div class="col-md-6" style="float:right;">
+                <div class="col-md-6 col-xs-12">
                   <div style="margin-top:10px;margin-bottom:10px;" class="input-group">
-                    <span class="input-group-addon" style="font-weight:bold; padding-right:110px;font-size:14px;">Рік</span>
-                    <input type="search" class="form-control" id="searchYear" placeholder="Рік" ng-model="searchYear.year" style="width:310px;">
+                    <span class="input-group-addon hidden-xs" style="font-weight:bold; padding-right:110px;font-size:14px;">Рік</span>
+                    <input type="search" class="form-control" id="searchYear" placeholder="Рік" ng-model="searchYear.year" style="width:100%;">
                     <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchYear ).length}}</span>
                   </div>
                 </div>
               </div>
             </form>
+
             <div class="clearfix"></div>
-            <label style="margin-top:10px;margin-left:10px; font-size:16px;">Всего публікацій {{books.length}}</label>
+            <label style="margin-top:10px; font-size:16px;">Всего публікацій {{books.length}}</label>
             <div class="row">
               <div class="col-md-12">
-                <button type="button" class="btn btn-primary" style="margin-right:20px;" ng-click="showAddForm()">Додати публікацію</button>
+                <button type="button" class="btn btn-primary" ng-click="showAddForm()">Додати публікацію</button>
               </div>
             </div>
-
+            <div class="clearfix"></div>
 
             <div class="row" style="padding:10px; background:#f5f5f5;" ng-show='showAdd'>
 
