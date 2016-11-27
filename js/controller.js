@@ -7,8 +7,6 @@ angular
     var ref = firebase.database().ref();
     var auth = $firebaseAuth();
 
-
-
     $scope.books = $firebaseArray(ref);
     $scope.showAdd = false;
     $scope.showEdit = false;
@@ -62,12 +60,37 @@ angular
     $scope.TomAndNumber = false;
 
     $scope.isTomAndNumber = function (book) {
-      if (book.tom && book.number) {
+      if ((book.tom && book.number) && book.type != 5) {
         return true;
       } else {
         return false;
       }
     };
+
+    $scope.isTomOrNumber = function (book) {
+      if ((book.tom || book.number) && book.type != 5) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    $scope.isTomNoNumber = function (book) {
+      if ((book.tom && !book.number) || (!book.tom && book.number) && book.type != 5) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    $scope.isNumberNoPage = function (book) {
+      if (book.number && !book.page) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
 
     $scope.isAuthors = function (book) {
       if (book.authors) {
@@ -86,7 +109,7 @@ angular
     };
 
     $scope.isEditors = function (book) {
-      if (book.editors) {
+      if (book.editors && book.type != 5) {
         return true;
       } else {
         return false;
@@ -107,7 +130,7 @@ angular
       }
     };
     $scope.isTom = function (book) {
-      if (book.tom) {
+      if (book.tom && book.type != 5) {
         return true;
       } else {
         return false;
@@ -115,7 +138,7 @@ angular
     };
 
     $scope.isNumber = function (book) {
-      if (book.number) {
+      if (book.number && book.type != 5) {
         return true;
       } else {
         return false;
@@ -152,14 +175,14 @@ angular
       }
     };
     $scope.isTown = function (book) {
-      if (book.town) {
+      if (book.town && book.type != 5 && book.type != 3) {
         return true;
       } else {
         return false;
       }
     };
     $scope.isPublic = function (book) {
-      if (book.public) {
+      if (book.public && book.type != 3 && book.type != 5) {
         return true;
       } else {
         return false;
@@ -195,6 +218,14 @@ angular
         return false;
       } else {
         return true;
+      }
+    };
+
+    $scope.isNoPublic = function (book) {
+      if (((!book.public && !book.town) || (!book.public && book.town && book.type == 2)) && book.type != 3 && book.type != 5) {
+        return true;
+      } else {
+        return false;
       }
     };
 
@@ -300,6 +331,8 @@ angular
       $scope.newLink = '';
       $scope.showAdd = false;
     };
+
+
 
     $scope.editBook = function (id) {
 

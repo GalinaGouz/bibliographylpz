@@ -126,6 +126,8 @@
                         <option value="3">Стаття в журналі</option>
                         <option value="4">Матеріали конференцій</option>
                         <option value="5">Рукописи</option>
+                        <option value="6">Електронні видання</option>
+                        <option value="7">Депоновані</option>
                       </select>
                     </div>
                   </div>
@@ -216,12 +218,14 @@
                       <form class="form-group" name="editForm" ng-submit=updateBook(book.$id)>
                         <div class="row">
                           <div class="col-md-12 ">
-                            <select class="form-control" id="type" value="{{bookToUpdate.type}}" ng-model="book.type">
+                            <select class="form-control" id="type" value="{{bookToUpdate.type}}" ng-model="bookToUpdate.type">
                               <option value="1">Книга</option>
                               <option value="2">Стаття в збірнику</option>
                               <option value="3">Стаття в журналі</option>
                               <option value="4">Матеріали конференцій</option>
                               <option value="5">Рукописи</option>
+                              <option value="6">Електронні видання</option>
+                              <option value="7">Депоновані</option>
                             </select>
                           </div>
                         </div>
@@ -294,9 +298,9 @@
 
         </div>
         <ol>
-          <li ng-repeat="book in books | filter : searchName | filter : searchAuthors | filter : searchBookname | filter : searchYear | orderBy : Sort | orderBy: year | orderBy: yearletter " ng-mouseover="editBtn=true" ng-mouseleave="editBtn=false">
-
-            <b>{{book.authors}}</b> <i>{{book.name}}</i><span ng-show=isEditors(book)> {{book.editors}}. &mdash;</span><span style="align:left; " ng-show="book.type==3 "> // </span><span ng-show="book.type==4 "> // </span><span ng-show="book.type==2 "> / </span><span ng-show="book.type!=1"> {{book.bookname}}. &mdash;</span><span ng-show="book.vypusk ">{{book.vypusk}}. &mdash;</span><span ng-show=isYear(book)> {{book.year}}</span><span ng-show=isYearLetter(book)>{{book.yearletter}}</span><span ng-show=isYear(book)>. &mdash; </span><span ng-show=isTom(book)>{{book.tom}}</span><span ng-show=isTomAndNumber(book)>, </span><span ng-show=isNumber(book)>{{book.number}} </span><span ng-hide=isYear(book)>. &mdash;</span><span ng-show=isTown(book)> {{book.town}}</span><span ng-show=isPublic(book)>: {{book.public}}</span><span ng-show=isOnlyYear(book)>. &mdash; </span><span ng-show=isPage(book)>{{book.page}}</span><span ng-show=isPrim(book)>. &mdash; {{book.prim}}</span><span ng-show=isLink(book)>. &mdash; {{book.link}}</span>.<span style="cursor: pointer;" ng-show="isAuth && editBtn" ng-click="editBook(book.$id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+          <li ng-repeat="book in books | filter : searchName | filter : searchAuthors | filter : searchBookname | filter : searchYear | orderBy : Sort | orderBy: year | orderBy: yearletter " ng-mouseover="editBtn=true" ng-mouseleave="editBtn=false" id={{book.$id}}>
+            <b>{{book.authors}}</b> {{book.name}}<span style="align:left; " ng-show="book.type==3 || book.type==4 "> // </span><span ng-show="book.type==2 || book.type==7 "> / </span><span ng-show="book.type!=1"> {{book.bookname}}</span><span ng-show=isEditors(book)> / {{book.editors}}. &mdash;</span><span ng-show="book.vypusk ">. {{book.vypusk}}. &mdash;</span><span ng-show="!book.vypusk && !book.editors ">. &mdash;</span><span ng-show=isTown(book) && ( book.type==1 || book.type==2 || book.type==4)> {{book.town}}</span><span ng-show=isPublic(book)>: {{book.public}}, </span><span ng-show=isNoPublic(book)>, </span><span ng-show=isYear(book)> {{book.year}}</span><span ng-show=isYearLetter(book)>{{book.yearletter}}</span><span ng-show=isTomOrNumber(book)>. &mdash; </span><span ng-show=isTom(book)>{{book.tom}}</span><span ng-show=isTomAndNumber(book)>, </span><span ng-show=isNumber(book)>{{book.number}}</span><span ng-show=isPage(book)>. &mdash; {{book.page}}.</span>
+            <span ng-show=isPrim(book)> &mdash; {{book.prim}}.</span><span ng-show=isLink(book)>&mdash; URL:&nbsp;<a href={{book.link}} target="_blank">{{book.link}}</a></span><span style="cursor: pointer;" ng-show="isAuth && editBtn" ng-click="editBook(book.$id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
 
           </li>
 
