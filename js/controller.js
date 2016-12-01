@@ -230,7 +230,7 @@ angular
     };
 
     $scope.isNoPublic = function (book) {
-      if ((!book.public && !book.town) || (!book.public && book.town && book.type == 2) && book.type != 3 && book.type != 5) {
+      if (((!book.public && !book.town) || (!book.public && book.town && (book.type == 2 || book.type == 4))) && book.type != 3 && book.type != 5) {
         return true;
       } else {
         return false;
