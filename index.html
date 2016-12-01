@@ -12,12 +12,13 @@
   <script src="js/lodash.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
+  <link rel="stylesheet" href="./css/main.css">
   <!-- <link rel="stylesheet" href="css/swipebox.css"> -->
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <!-- <script src="js/jquery.swipebox.min.js"></script> -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,7 +65,7 @@
       </div>
 
       <div class="panel-body">
-        <div style="width:95%;">
+        <div class="center-block" style="width:95%;">
 
           <div style="padding:15px; margin-bottom:15px; background:#f5f5f5;" class="row">
 
@@ -111,7 +112,7 @@
             <label style="margin-top:10px; font-size:16px;">Всего публікацій {{books.length}}</label>
             <div class="row">
               <div class="col-md-12">
-                <button type="button" class="btn btn-primary" ng-click="showAddForm()">Додати публікацію</button>
+                <button ng-show="isAuth" type="button" class="btn btn-primary" ng-click="showAddForm()">Додати публікацію</button>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -188,10 +189,19 @@
 
 
                   </div>
-
-                  <input type="text " class="form-control " placeholder="Примітки " ng-model="newPrim " />
-                  <input type="text " class="form-control " placeholder="Посилання / URL " ng-model="newLink " />
-
+                  <div class="row ">
+                    <div class="col-md-12 ">
+                      <input type="text " class="form-control " placeholder="Примітки " ng-model="newPrim " />
+                    </div>
+                  </div>
+                  <div class="row ">
+                    <div class="col-md-9 ">
+                      <input type="text " class="form-control " placeholder="Посилання / URL " ng-model="newLink " />
+                    </div>
+                    <div class="col-md-3 ">
+                      <input type="text " class="form-control " placeholder="ISBN " ng-model="newISBN " />
+                    </div>
+                  </div>
 
                 </div>
                 <div class="col-md-2 ">
@@ -279,8 +289,23 @@
                             <input type="text " class="form-control " placeholder="Видавництво " value="{{bookToUpdate.public}}" ng-model="bookToUpdate.public" />
                           </div>
                         </div>
-                        <input type="text " class="form-control " placeholder="Примітки " value="{{bookToUpdate.prim}}" ng-model="bookToUpdate.prim" />
-                        <input type="text " class="form-control " placeholder="Посилання / URL " value="{{bookToUpdate.link}}" ng-model="bookToUpdate.link" />
+
+                        <div class="row ">
+                          <div class="col-md-12 ">
+                            <input type="text " class="form-control " placeholder="Примітки " value="{{bookToUpdate.prim}}" ng-model="bookToUpdate.prim" />
+                          </div>
+                        </div>
+                        <div class="row ">
+                          <div class="col-md-9 ">
+                            <input type="text " class="form-control " placeholder="Посилання / URL " value="{{bookToUpdate.link}}" ng-model="bookToUpdate.link" />
+                          </div>
+                          <div class="col-md-3 ">
+                            <input type="text " class="form-control " placeholder="ISBN " value="{{bookToUpdate.isbn}}" ng-model="bookToUpdate.isbn" />
+                          </div>
+                        </div>
+
+
+
                         <button type="submit" class="btn btn-primary">Оновити</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрити</button>
                       </form>
@@ -301,8 +326,7 @@
         </div>
         <ol>
           <li ng-repeat="book in books | filter : searchName | filter : searchAuthors | filter : searchBookname | filter : searchYear | orderBy : Sort | orderBy: year | orderBy: yearletter " ng-mouseover="editBtn=true" ng-mouseleave="editBtn=false" id={{book.$id}}>
-            <b>{{book.authors}}</b> {{book.name}}<span style="align:left; " ng-show="book.type==3 || book.type==4 "> // </span><span ng-show="book.type==2 || book.type==7 "> / </span><span ng-show="book.type!=1"> {{book.bookname}}</span><span ng-show=isEditors(book)> / {{book.editors}}. &mdash;</span><span ng-show="book.vypusk ">. {{book.vypusk}}. &mdash;</span><span ng-show="!book.vypusk && !book.editors ">. &mdash;</span><span ng-show=isTown(book) && ( book.type==1 || book.type==2 || book.type==4)> {{book.town}}</span><span ng-show=isPublic(book)>: {{book.public}}, </span><span ng-show=isNoPublic(book)>, </span><span ng-show=isYear(book)> {{book.year}}</span><span ng-show=isYearLetter(book)>{{book.yearletter}}</span><span ng-show=isTomOrNumber(book)>. &mdash; </span><span ng-show=isTom(book)>{{book.tom}}</span><span ng-show=isTomAndNumber(book)>, </span><span ng-show=isNumber(book)>{{book.number}}</span><span ng-show=isPage(book)>. &mdash; {{book.page}}.</span>
-            <span ng-show=isPrim(book)> &mdash; {{book.prim}}.</span><span ng-show=isLink(book)>&mdash; URL:&nbsp;<a href={{book.link}} target="_blank">{{book.link}}</a></span><span style="cursor: pointer;" ng-show="isAuth && editBtn" ng-click="editBook(book.$id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+            <b>{{book.authors}}</b> {{book.name}}<span style="align:left; " ng-show="book.type==3 || book.type==4 "> // </span><span ng-show="book.type==2 || book.type==7 "> / </span><span ng-show="book.type!=1"> {{book.bookname}}</span><span ng-show=isEditors(book)> / {{book.editors}}. &mdash;</span><span ng-show="book.vypusk ">. {{book.vypusk}}. &mdash;</span><span ng-show="!book.vypusk && !book.editors ">. &mdash;</span><span ng-show=isTown(book) && ( book.type==1 || book.type==2 || book.type==4)> {{book.town}}</span><span ng-show=isPublic(book)>: {{book.public}}, </span><span ng-show=isNoPublic(book)>, </span><span ng-show=isYear(book)> {{book.year}}</span><span ng-show=isYearLetter(book)>{{book.yearletter}}</span><span ng-show=isTomOrNumber(book)>. &mdash; </span><span ng-show=isTom(book)>{{book.tom}}</span><span ng-show=isTomAndNumber(book)>, </span><span ng-show=isNumber(book)>{{book.number}}</span><span ng-show=isPage(book)>. &mdash; {{book.page}}.</span><span ng-show=isPrim(book)> &mdash; {{book.prim}}.</span><span ng-show=isISBN(book)> ISBN {{book.isbn}}.</span><span ng-show=isLink(book)>&mdash; URL:&nbsp;<a href={{book.link}} target="_blank">{{book.link}}</a></span><span style="cursor: pointer;" ng-show="isAuth && editBtn" ng-click="editBook(book.$id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
 
           </li>
 

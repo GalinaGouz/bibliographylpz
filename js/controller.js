@@ -205,6 +205,14 @@ angular
       }
     };
 
+    $scope.isISBN = function (book) {
+      if (book.isbn) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
     $scope.isOnlyYear = function (book) {
       if (!(book.tom) && !(book.number) && !(book.town) && !(book.public)) {
         return false;
@@ -222,7 +230,7 @@ angular
     };
 
     $scope.isNoPublic = function (book) {
-      if (((!book.public && !book.town) || (!book.public && book.town && book.type == 2)) && book.type != 3 && book.type != 5) {
+      if ((!book.public && !book.town) || (!book.public && book.town && book.type == 2) && book.type != 3 && book.type != 5) {
         return true;
       } else {
         return false;
@@ -296,6 +304,10 @@ angular
       if ($scope.newLink) {
         newLink = $scope.newLink
       } else newLink = null;
+      if ($scope.newISBN) {
+        newLink = $scope.newISBN
+      } else newISBN = null;
+
 
       $scope.books.$add({
         authors: newAuthors,
@@ -312,7 +324,8 @@ angular
         town: newTown,
         public: newPublic,
         prim: newPrim,
-        link: newLink
+        link: newLink,
+        isbn: newISBN
 
       });
       $scope.newAuthors = '';
@@ -324,11 +337,13 @@ angular
       $scope.newNumber = '';
       $scope.newPage = '';
       $scope.newYear = '';
+      $scope.newYearLetter = '';
       $scope.newTown = '';
       $scope.newType = '1';
       $scope.newPublic = '';
       $scope.newPrim = '';
       $scope.newLink = '';
+      $scope.newISBN = '';
       $scope.showAdd = false;
     };
 
