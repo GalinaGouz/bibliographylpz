@@ -33,8 +33,16 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="row">
-          <div class="col-md-5">
-            <h1 class="panel-title" style="padding-top:3px;font-size:18px;">Бібліографія Луганського природного заповідника<br/>Bibliography of the Luhansk Natural Reserve  </h1>
+          <div class="col-md-12">
+            <h1 class="panel-title" style="padding-top:3px;font-size:24px; text-align:center; font-weight:bold;">Бібліографія робіт по Луганському природному заповіднику<br/>Bibliography about the Luhansk Natural Reserve  </h1>
+          </div>
+
+
+        </div>
+        <hr />
+        <div class="row">
+         <div style="margin-top:5px;" class="col-md-5">
+         <span style = "float:right;padding-top:6px;" ng-hide="isAuth"><b>Вхід до режиму редагування</b></span>
           </div>
           <div style="margin-top:5px;" class="col-md-5">
             <form class="form-inline" name="signForm" novalidate>
@@ -60,8 +68,8 @@
             <button style="width:100%;" ng-show="isAuth" ng-click=signOut() class="btn btn-success"><span><i class="fa fa-sign-out " aria-hidden="true"></i> Вихід</span></button>
           </div>
 
-
         </div>
+
       </div>
 
       <div class="panel-body">
@@ -74,7 +82,7 @@
                 <div class="col-md-6 col-xs-12">
                   <div style="margin-top:10px;margin-bottom:15px;" class="input-group">
                     <span class="input-group-addon hidden-xs" style="margin-right:15px;  font-weight:bold; font-size:14px;  padding-right:54px; ">Пошук по назві</span>
-                    <input type="search" class="form-control" id="searchName" placeholder="Пошук по назві" ng-model="searchName.name" style="width:100%;">
+                    <input type="search" class="form-control" id="searchName" placeholder="Назва" ng-model="searchName.name" style="width:100%;">
                     <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchName|filter:searchAuthors|filter:searchBookname|filter:searchYear ).length}}</span>
 
                   </div>
@@ -83,7 +91,7 @@
                 <div class="col-md-6 col-xs-12">
                   <div style="margin-top:10px;margin-bottom:10px;" class="input-group">
                     <span class="input-group-addon hidden-xs" style="font-weight:bold; font-size:14px; padding-right:10px; ">Пошук по автору</span>
-                    <input type="search" class="form-control" id="searchAuthors" placeholder="Пошук по автору" ng-model="searchAuthors.authors" style="width:100%;">
+                    <input type="search" class="form-control" id="searchAuthors" placeholder="Автор" ng-model="searchAuthors.authors" style="width:100%;">
                     <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchName|filter:searchAuthors|filter:searchBookname|filter:searchYear ).length}}</span>
                   </div>
                 </div>
@@ -91,8 +99,8 @@
               <div class="row">
                 <div class="col-md-6 col-xs-12">
                   <div style="margin-top:10px;margin-bottom:15px;" class="input-group">
-                    <span class="input-group-addon hidden-xs" style="margin-right:15px; padding-right:85px; font-weight:bold; font-size:14px;">Публікація</span>
-                    <input type="search" class="form-control" id="searchBookname" placeholder="Публікація" ng-model="searchBookname.bookname" style="width:100%;">
+                    <span class="input-group-addon hidden-xs" style="margin-right:15px; padding-right:30px; font-weight:bold; font-size:14px;">Пошук по джерелу</span>
+                    <input type="search" class="form-control" id="searchBookname" placeholder="Джерело" ng-model="searchBookname.bookname" style="width:100%;">
                     <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchName|filter:searchAuthors|filter:searchBookname|filter:searchYear ).length}}</span>
 
                   </div>
@@ -100,7 +108,7 @@
 
                 <div class="col-md-6 col-xs-12">
                   <div style="margin-top:10px;margin-bottom:10px;" class="input-group">
-                    <span class="input-group-addon hidden-xs" style="font-weight:bold; padding-right:110px;font-size:14px;">Рік</span>
+                    <span class="input-group-addon hidden-xs" style="font-weight:bold; padding-right:27px;font-size:14px;">Пошук по року</span>
                     <input type="search" class="form-control" id="searchYear" placeholder="Рік" ng-model="searchYear.year" style="width:100%;">
                     <span style="font-weight:bold; font-size:20px; color:green;" class="input-group-addon">{{(books|filter:searchName|filter:searchAuthors|filter:searchBookname|filter:searchYear ).length}}</span>
                   </div>
@@ -109,10 +117,24 @@
             </form>
 
             <div class="clearfix"></div>
-            <label style="margin-top:10px; font-size:16px;">Разом публікацій {{books.length}}</label>
+
+                        <!--<div class="row">
+             <div class="col-md-5">
+
+              <select multiple class="form-control" id="sort" ng-model="Sort">
+                        <option autofocus value="author">По автору</option>
+                        <option value="name">По назві</option>
+                        <option value="bookname">По джерелу</option>
+                        <option value="year">По року</option>
+                                              </select>
+            </div>
+
+            </div>-->
+                         <label style="margin-top:10px; font-size:16px;">Разом публікацій {{books.length}}</label>
+                         <button style="float:right;" ng-show="isAuth" type="button" class="btn btn-primary" ng-click="showAddForm()">Додати публікацію</button>
             <div class="row">
               <div class="col-md-12">
-                <button ng-show="isAuth" type="button" class="btn btn-primary" ng-click="showAddForm()">Додати публікацію</button>
+
               </div>
             </div>
             <div class="clearfix"></div>

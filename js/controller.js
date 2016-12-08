@@ -55,7 +55,7 @@ angular
     };
 
 
-    $scope.Sort = "authors+name";
+    $scope.Sort = "year+authors+name";
     $scope.SortDesc = false;
     $scope.TomAndNumber = false;
 
